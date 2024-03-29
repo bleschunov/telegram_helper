@@ -1,10 +1,10 @@
 from typing import Literal
 
-from telethon import TelegramClient
+from telethon.sync import TelegramClient
 from telethon.tl.types import Message
 
 
-async def send_telegram_message(
+def send_telegram_message(
         telegram_client: TelegramClient,
         receiver: str | int | Literal["me"],
         message_text: str
@@ -20,4 +20,4 @@ async def send_telegram_message(
     Returns:
         Message: Message object from Telethon library.
     """
-    return await telegram_client.send_message(receiver, message_text)
+    return telegram_client.send_message(receiver, message_text)

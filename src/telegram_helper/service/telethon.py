@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from telethon import TelegramClient
+from telethon.sync import TelegramClient
 
 
 def get_telegram_client(alias: str, api_id: int, api_hash: str) -> TelegramClient:

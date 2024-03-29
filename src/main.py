@@ -1,4 +1,3 @@
-import asyncio
 from pathlib import Path
 from typing import Optional, Annotated
 
@@ -42,14 +41,11 @@ def get_telegram_accounts(alias: Annotated[Optional[str], typer.Argument()] = No
 
 @app.command()
 def send_message(telegram_account_alias: str, receiver: str, message_text: str):
-    async def _send_message():
-        try:
-            await message_model.send_message(telegram_account_alias, receiver, message_text)
-            print_success("Message was sent successfully!")
-        except ValueError as e:
-            print_error(str(e))
-
-    asyncio.run(_send_message())
+    try:
+        message_model.send_message(telegram_account_alias, receiver, message_text)
+        print_success("Message was sent successfully!")
+    except ValueError as e:
+        print_error(str(e))
 
 
 @app.command()
@@ -62,19 +58,16 @@ def create_mailing_list(alias: str, filename: str):
 
 @app.command()
 def send_messages_to_mailing_list(telegram_account_alias: str, mailing_list_alias: str, message_text: str):
-    async def _send_messages_to_mailing_list():
-        async for send_message_coroutine in message_model.send_messages_to_mailing_list_generator(
-            telegram_account_alias,
-            mailing_list_alias,
-            message_text
+    try:
+        for send_message_job in message_model.send_messages_to_mailing_list_generator(
+                telegram_account_alias,
+                mailing_list_alias,
+                message_text
         ):
-            try:
-                message = await send_message_coroutine
-                print_success(f"Message was successfully sent to {message.peer_id}!")
-            except ValueError as e:
-                print_error(str(e))
-
-    asyncio.run(_send_messages_to_mailing_list())
+            message = send_message_job()
+            print_success(f"Message was successfully sent to {message.peer_id}!")
+    except ValueError as e:
+        print_error(str(e))
 
 
 if __name__ == "__main__":

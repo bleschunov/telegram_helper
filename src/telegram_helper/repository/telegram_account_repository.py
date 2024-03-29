@@ -8,7 +8,7 @@ def add_telegram_account(alias: str, api_id: int, api_hash: str) -> TelegramAcco
 def get_telegram_account_by_alias(alias: str) -> TelegramAccount:
     try:
         return TelegramAccount.get(TelegramAccount.alias == alias)
-    except TelegramAccount.DoesNotExist as e:
+    except TelegramAccount.DoesNotExist:
         raise ValueError(f"Telegram account with alias={alias} is not found.")
 
 

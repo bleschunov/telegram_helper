@@ -5,7 +5,7 @@ from telethon.tl.types import Message
 
 
 async def send_telegram_message(
-        telethon_client: TelegramClient,
+        telegram_client: TelegramClient,
         receiver: str | int | Literal["me"],
         message_text: str
 ) -> Message:
@@ -13,11 +13,11 @@ async def send_telegram_message(
     Method to send telegram message from specific telegram account to specific user.
 
     Args:
-        telethon_client: Telethon client of specific account.
+        telegram_client: Telethon client of specific account.
         receiver: ID, phone number or handle of receiver.
         message_text: Message content.
 
     Returns:
         Message: Message object from Telethon library.
     """
-    return await telethon_client.send_message(receiver, message_text)
+    return await telegram_client.send_message(receiver, message_text)

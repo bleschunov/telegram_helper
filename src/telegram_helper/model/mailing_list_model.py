@@ -18,7 +18,6 @@ def create_mailing_list(alias: str, receivers: list[str]) -> MailingList:
         return x.strip()
 
     receivers = list(filter(_remove_empty_receivers, map(_strip_receivers, receivers)))
-    print(receivers)
     receivers_as_text = MAILING_RECEIVERS_SEPARATOR.join(receivers)
     return mailing_list_repository.create_mailing_list(alias, receivers_as_text)
 

@@ -5,7 +5,7 @@ from telegram_helper.schema.base_model import BaseModel
 
 class MailingList(BaseModel):
     id = pw.IntegerField(primary_key=True)
-    alias = pw.CharField(null=False)
+    alias = pw.CharField(null=False, unique=True, index=True)
     receivers = pw.CharField(null=False, max_length=1)
 
     class Meta:

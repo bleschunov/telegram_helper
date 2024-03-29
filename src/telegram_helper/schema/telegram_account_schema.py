@@ -5,7 +5,7 @@ from telegram_helper.schema.base_model import BaseModel
 
 class TelegramAccount(BaseModel):
     id = pw.IntegerField(primary_key=True)
-    alias = pw.CharField(null=False)
+    alias = pw.CharField(null=False, unique=True, index=True)
     api_id = pw.IntegerField(null=False)
     api_hash = pw.CharField(null=False)
 
